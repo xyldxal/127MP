@@ -18,6 +18,12 @@
         <label for="password_confirmation">Confirm Password:</label>
         <input type="password" id="password_confirmation" name="password_confirmation" required>
         <br>
+        <label for="role">Role</label>
+        <select id="role" name="role" required>
+            <option value="student">Student</option>
+            <option value="professor">Professor</option>
+        </select>
+        <br>
         <button type="submit">Register</button>
     </form>
 </body>
