@@ -12,8 +12,17 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::all();
-        return view('subjects.index', compact('subjects'));
+        $query = $request->input('query');
+
+        if ($query) {
+            $subjects = Subject::where('name', 'LIKE', "%{$query}%")
+                                ->orWhere('description', 'LIKE', "%{$query}%")
+                                ->get();
+        } else {
+            $subjects = Subject::all();
+        }
+
+        return view('subjects.index', compact('subjects', 'query'));
     }
 
     /**
@@ -76,5 +85,18 @@ class SubjectController extends Controller
     {
         $subject->delete();
         return redirect()->route('subjects.index');
+    }
+
+    public function viewEnrollments()
+    {
+        // Get the currently logged-in professor
+        $professorId = auth()->id();
+
+        // Get subjects taught by this professor with the count of enrollments
+        $subjects = Subject::withCount('enrollments')
+            ->where('professor_id', $professorId)
+            ->get();
+
+        return view('subjects.enrollments', compact('subjects'));
     }
 }

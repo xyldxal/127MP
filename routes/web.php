@@ -11,4 +11,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource('subjects', SubjectController::class);
     Route::resource('enrollments', EnrollmentController::class);
+
+    Route::get('subjects/enrollments', [SubjectController::class, 'viewEnrollments'])->name('subjects.enrollments');
+
 });
