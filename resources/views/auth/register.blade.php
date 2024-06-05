@@ -9,8 +9,11 @@
     <h1>Student Registration</h1>
     <form method="POST" action="{{ route('register') }}">
         @csrf
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="email">Email:</label>
+        <input id="email" type="email" name="email" value="{{ old('email') }}" required>
         <br>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
@@ -18,7 +21,7 @@
         <label for="password_confirmation">Confirm Password:</label>
         <input type="password" id="password_confirmation" name="password_confirmation" required>
         <br>
-        <label for="role">Role</label>
+        <label for="role">Role:</label>
         <select id="role" name="role" required>
             <option value="student">Student</option>
             <option value="professor">Professor</option>
