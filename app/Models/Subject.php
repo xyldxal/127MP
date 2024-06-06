@@ -20,4 +20,16 @@ class Subject extends Model
     {
         return $this->belongsTo(User::class, 'professor_id');
     }
+
+    public function remainingSlots()
+    {
+        // Calculate total enrolled students
+        $enrolledStudents = $this->enrollments()->count();
+
+        // Calculate remaining slots
+        $remainingSlots = $this->slots - $enrolledStudents;
+
+        // Ensure remaining slots are not negative
+        return max(0, $remainingSlots);
+    }
 }

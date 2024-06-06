@@ -50,17 +50,10 @@ class StudentController extends BaseController
             'subject_id' => 'required|exists:subjects,id',
         ]);
     
-        // Check if subject already exists in cart
-        $alreadyInCart = Cart::where('subject_id', $request->subject_id)
-            ->where('student_id', Auth::id())
-            ->exists();
-    
-        if ($alreadyInCart) {
-            return redirect()->back()->withErrors(['error' => 'Subject is already in your cart.']);
-        }
+        $subject = Subject::findOrFail($request->subject_id);
     
         // Check if subject is already enrolled
-        $alreadyEnrolled = Enrollment::where('subject_id', $request->subject_id)
+        $alreadyEnrolled = Enrollment::where('subject_id', $subject->id)
             ->where('student_id', Auth::id())
             ->exists();
     
@@ -68,9 +61,23 @@ class StudentController extends BaseController
             return redirect()->back()->withErrors(['error' => 'You are already enrolled in this subject.']);
         }
     
-        // Add subject to cart if not already in cart or enrolled
+        // Check if subject is already in cart
+        $alreadyInCart = Cart::where('subject_id', $subject->id)
+            ->where('student_id', Auth::id())
+            ->exists();
+    
+        if ($alreadyInCart) {
+            return redirect()->back()->withErrors(['error' => 'Subject is already in your cart.']);
+        }
+    
+        // Check if subject has available slots
+        if ($subject->remainingSlots() <= 0) {
+            return redirect()->back()->withErrors(['error' => 'Subject is full.']);
+        }
+    
+        // Add subject to cart
         Cart::create([
-            'subject_id' => $request->subject_id,
+            'subject_id' => $subject->id,
             'student_id' => Auth::id(),
         ]);
     
