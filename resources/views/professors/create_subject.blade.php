@@ -56,7 +56,7 @@
 <body>
     <div class="container">
         <h1>Create New Subject</h1>
-        <form action="{{ route('professor.store-subject') }}" method="POST">
+        <form action="{{ route('professor.subjects.store') }}" method="POST">
             @csrf
             <label for="name">Subject Name</label>
             <input type="text" id="name" name="name" required>

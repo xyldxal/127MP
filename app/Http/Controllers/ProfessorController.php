@@ -38,15 +38,13 @@ class ProfessorController extends Controller
 
     public function viewEnrollments(Subject $subject)
     {
-        // Load enrollments for the selected subject
         $enrollments = Enrollment::where('subject_id', $subject->id)->with('student')->get();
-
         return view('professors.view_enrollments', compact('subject', 'enrollments'));
     }
 
-    public function removeStudent(Enrollment $enrollment)
+    public function removeStudent(Request $request, $enrollmentId)
     {
-        // Delete enrollment record
+        $enrollment = Enrollment::findOrFail($enrollmentId);
         $enrollment->delete();
 
         return redirect()->back()->with('success', 'Student removed from subject.');
