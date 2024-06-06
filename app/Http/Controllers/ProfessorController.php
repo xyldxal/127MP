@@ -5,16 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Subject;
 use App\Models\Enrollment;
+use Auth;
 
 class ProfessorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function dashboard()
     {
-        $subjects = Subject::where('professor_id', auth()->id())->get();
-
+        $subjects = Subject::where('professor_id', auth()->id())->withCount('enrollments')->get();
         return view('professors.dashboard', compact('subjects'));
     }
 
@@ -39,20 +36,17 @@ class ProfessorController extends Controller
         return redirect()->route('professor.dashboard')->with('success', 'Subject created successfully.');
     }
 
-    public function viewEnrollments(Subject $subject)
+    public function viewEnrollments($subjectId)
     {
-        // Load enrollments for the selected subject
-        $enrollments = Enrollment::where('subject_id', $subject->id)->with('student')->get();
-
-        return view('professors.view_enrollments', compact('subject', 'enrollments'));
+        $subject = Subject::with('enrollments.student')->findOrFail($subjectId);
+        return view('professors.view_enrollments', compact('subject'));
     }
 
-    public function removeStudent(Enrollment $enrollment)
+    public function removeStudent(Request $request, $enrollmentId)
     {
-        // Delete enrollment record
+        $enrollment = Enrollment::findOrFail($enrollmentId);
         $enrollment->delete();
 
         return redirect()->back()->with('success', 'Student removed from subject.');
     }
-
 }
