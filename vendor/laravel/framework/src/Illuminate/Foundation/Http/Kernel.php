@@ -69,7 +69,7 @@ class Kernel implements KernelContract
      *
      * @deprecated
      */
-    protected $routeMiddleware = [];
+    protected $routeMiddleware = ['role' => \App\Http\Middleware\RoleCheck::class];
 
     /**
      * The application's middleware aliases.
