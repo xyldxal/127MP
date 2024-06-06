@@ -41,5 +41,8 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 // Professor dashboard route
 Route::middleware(['auth', 'role:professor'])->group(function () {
     Route::get('/professor/dashboard', [ProfessorController::class, 'dashboard'])->name('professor.dashboard');
-    // Other professor-specific routes can go here
+    Route::get('/professor/create-subject', [ProfessorController::class, 'createSubject'])->name('professor.create-subject');
+    Route::post('/professor/store-subject', [ProfessorController::class, 'storeSubject'])->name('professor.store-subject');
+    Route::get('/professor/view-enrollments/{subject}', [ProfessorController::class, 'viewEnrollments'])->name('professor.view-enrollments');
+    Route::delete('/professor/remove-student/{enrollment}', [ProfessorController::class, 'removeStudent'])->name('professor.remove-student');
 });

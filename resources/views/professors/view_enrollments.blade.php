@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professor Dashboard</title>
+    <title>View Enrollments</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -47,33 +47,39 @@
         .button:hover {
             background-color: #8B0000;
         }
+        .remove-button {
+            background-color: #8B0000;
+        }
+        .remove-button:hover {
+            background-color: #FF0000;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Professor Dashboard</h1>
-        <a href="{{ route('professor.create-subject') }}" class="button">Create New Subject</a>
-        <h2>Your Subjects</h2>
-        @if($subjects->isEmpty())
-            <p>You have not created any subjects.</p>
+        <h1>Enrollments for {{ $subject->name }}</h1>
+        @if($enrollments->isEmpty())
+            <p>No students are currently enrolled in this subject.</p>
         @else
             <table>
                 <thead>
                     <tr>
-                        <th>Subject</th>
-                        <th>Slots</th>
-                        <th>Enrolled Students</th>
-                        <th>Actions</th>
+                        <th>Student Name</th>
+                        <th>Email</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($subjects as $subject)
+                    @foreach($enrollments as $enrollment)
                         <tr>
-                            <td>{{ $subject->name }}</td>
-                            <td>{{ $subject->slots }}</td>
-                            <td>{{ $subject->enrollments_count }}</td>
+                            <td>{{ $enrollment->student->name }}</td>
+                            <td>{{ $enrollment->student->email }}</td>
                             <td>
-                                <a href="{{ route('professor.view-enrollments', $subject->id) }}">View Enrollments</a>
+                                <form action="{{ route('professor.remove-student', $enrollment->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="remove-button">Remove</button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
