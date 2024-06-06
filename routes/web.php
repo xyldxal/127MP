@@ -34,7 +34,7 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
     Route::get('/student/subjects/search', [StudentController::class, 'search'])->name('student.search');
     Route::post('/student/subjects/add', [StudentController::class, 'addSubject'])->name('student.add-subject');
-    Route::delete('/student/subjects/{id}/remove', [StudentController::class, 'removeSubject'])->name('student.remove-subject');
+    Route::post('/student/subjects/{id}/remove', [StudentController::class, 'removeSubject'])->name('student.remove-subject');
     Route::post('/student/enrollments/finalize', [StudentController::class, 'finalizeEnrollment'])->name('student.finalize-enrollment');
 });
 
