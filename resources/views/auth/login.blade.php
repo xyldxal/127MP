@@ -15,14 +15,14 @@
 
             <div>
                 <label for="email">Email:</label>
-                <input id="email" type="email" name="email" required autofocus>
-                <div class="error" id="emailError">Email is required</div>
+                <input id="email" type="email" name="email" placeholder="Email is Required "required autofocus>
+                <div class="error" id="emailError"></div>
             </div>
 
             <div>
                 <label for="password">Password:</label>
-                <input id="password" type="password" name="password" required>
-                <div class="error" id="passwordError">Password is required</div>
+                <input id="password" type="password" name="password" placeholder="Password is Required"required>
+                <div class="error" id="passwordError"></div>
             </div>
 
             <button type="submit">Login</button>
