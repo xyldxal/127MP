@@ -25,24 +25,30 @@ class StudentController extends BaseController
     }
 
     public function search(Request $request)
-    {
-        $query = $request->input('query');
-        $subjects = Subject::where('name', 'ILIKE', "%{$query}%")
-            ->orWhere('description', 'ILIKE', "%{$query}%")
-            ->get();
+{
+    $query = $request->input('query');
+    $subjects = Subject::where('name', 'ILIKE', "%{$query}%")
+        ->orWhere('description', 'ILIKE', "%{$query}%")
+        ->get();
 
-        // Load the enrollments and cart items with subjects
-        $user = Auth::user();
-        $enrollments = Enrollment::where('student_id', $user->id)->with('subject')->get();
-        $cart = Cart::where('student_id', $user->id)->with('subject')->get();
+    // Load the enrollments and cart items with subjects
+    $user = Auth::user();
+    $enrollments = Enrollment::where('student_id', $user->id)->with('subject')->get();
+    $cart = Cart::where('student_id', $user->id)->with('subject')->get();
 
-        return view('student.dashboard', [
-            'subjects' => $subjects,
-            'query' => $query,
-            'enrollments' => $enrollments,
-            'cart' => $cart,
-        ]);
+    // Check if each subject is already enrolled
+    foreach ($subjects as $subject) {
+        $subject->isEnrolled = $enrollments->contains('subject_id', $subject->id);
+        $subject->isInCart = $cart->contains('subject_id', $subject->id);
     }
+
+    return view('student.dashboard', [
+        'subjects' => $subjects,
+        'query' => $query,
+        'enrollments' => $enrollments,
+        'cart' => $cart,
+    ]);
+}
 
     public function addSubject(Request $request)
     {

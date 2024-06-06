@@ -32,7 +32,7 @@ nav a {
 
 nav a:hover {
     background-color: #8B0000; /* Dark red background */
-    color: #8B0000;
+    color: white;
 }
 
 .container {

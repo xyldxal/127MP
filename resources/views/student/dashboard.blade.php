@@ -12,28 +12,49 @@
     </nav>
     <div class="container">
         <h1>Student Dashboard</h1>
+        <h2>Search Subjects</h2>
+        <form action="{{ route('student.search') }}" method="GET">
+            <input type="text" name="query" placeholder="Search for subjects">
+            <button type="submit">Search</button>
+        </form>
 
-        <h2>Your Enrollments</h2>
-        @if($enrollments->isEmpty())
-            <p>You are not enrolled in any subjects.</p>
-        @else
+        @isset($subjects)
+            <h2>Search Results</h2>
             <table>
                 <thead>
                     <tr>
                         <th>Subject Name</th>
-                        <th>Slots</th>
+                        <th>Description</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($enrollments as $enrollment)
+                    @foreach($subjects as $subject)
                         <tr>
-                            <td>{{ $enrollment->subject->name }}</td>
-                            <td>{{ $enrollment->subject->slots }}</td>
+                            <td>{{ $subject->name }}</td>
+                            <td>{{ $subject->description }}</td>
+                            <td>
+                                @if ($subject->remainingSlots() > 0)
+                                    @if ($subject->isEnrolled)
+                                        <span>You are already enrolled in this subject.</span>
+                                    @elseif ($subject->isInCart)
+                                        <span>Subject is already in your cart.</span>
+                                    @else
+                                        <form action="{{ route('student.add-subject') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="subject_id" value="{{ $subject->id }}">
+                                            <button type="submit" class="button">Add to Cart</button>
+                                        </form>
+                                    @endif
+                                @else
+                                    <span>Subject is full. You can't enroll anymore.</span>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-        @endif
+        @endisset
 
         <h2>Your Enrollment Cart</h2>
         @if($cart->isEmpty())
@@ -62,39 +83,28 @@
             </table>
         @endif
 
-        <h2>Search Subjects</h2>
-        <form action="{{ route('student.search') }}" method="GET">
-            <input type="text" name="query" placeholder="Search for subjects">
-            <button type="submit">Search</button>
-        </form>
-
-        @isset($subjects)
-            <h2>Search Results</h2>
+        <h2>Your Enrollments</h2>
+        @if($enrollments->isEmpty())
+            <p>You are not enrolled in any subjects.</p>
+        @else
             <table>
                 <thead>
                     <tr>
                         <th>Subject Name</th>
-                        <th>Description</th>
-                        <th>Action</th>
+                        <th>Slots</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($subjects as $subject)
+                    @foreach($enrollments as $enrollment)
                         <tr>
-                            <td>{{ $subject->name }}</td>
-                            <td>{{ $subject->description }}</td>
-                            <td>
-                                <form action="{{ route('student.add-subject') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="subject_id" value="{{ $subject->id }}">
-                                    <button type="submit" class="button">Add to Cart</button>
-                                </form>
-                            </td>
+                            <td>{{ $enrollment->subject->name }}</td>
+                            <td>{{ $enrollment->subject->slots }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-        @endisset
+        @endif
+        
 
         <form action="{{ route('student.finalize-enrollment') }}" method="POST">
             @csrf
