@@ -7,6 +7,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/student-dashboard.css') }}" >
 </head>
 <body>
+    <nav>
+        <a href="/login">Logout</a>
+    </nav>
     <div class="container">
         <h1>Student Dashboard</h1>
 
