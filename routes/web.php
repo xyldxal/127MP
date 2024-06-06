@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ProfessorController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 
@@ -27,4 +28,15 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('enrollments', EnrollmentController::class);
     Route::get('/dashboard', [StudentController::class, 'index'])->middleware('auth')->name('dashboard');
     Route::get('subjects/enrollments', [SubjectController::class, 'viewEnrollments'])->name('subjects.enrollments');
+});
+
+Route::middleware(['auth', 'role:student'])->group(function () {
+    Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
+    // Other student-specific routes can go here
+});
+
+// Professor dashboard route
+Route::middleware(['auth', 'role:professor'])->group(function () {
+    Route::get('/professor/dashboard', [ProfessorController::class, 'dashboard'])->name('professor.dashboard');
+    // Other professor-specific routes can go here
 });
