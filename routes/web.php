@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
-    Route::get('/student/subjects/search', [StudentController::class, 'search'])->name('student.search');
+    Route::post('/student/subjects/search', [StudentController::class, 'search'])->name('student.search');
     Route::post('/student/subjects/add', [StudentController::class, 'addSubject'])->name('student.add-subject');
     Route::delete('/student/subjects/{id}/remove', [StudentController::class, 'removeSubject'])->name('student.remove-subject');
     Route::post('/student/enrollments/finalize', [StudentController::class, 'finalizeEnrollment'])->name('student.finalize-enrollment');
@@ -41,5 +41,9 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 // Professor dashboard route
 Route::middleware(['auth', 'role:professor'])->group(function () {
     Route::get('/professor/dashboard', [ProfessorController::class, 'dashboard'])->name('professor.dashboard');
-    // Other professor-specific routes can go here
+    Route::get('/professor/subjects/create', [ProfessorController::class, 'createSubject'])->name('professor.subjects.create');
+    Route::post('/professor/subjects/store', [ProfessorController::class, 'storeSubject'])->name('professor.subjects.store');
+    Route::get('/professor/subjects/{subject}/viewEnrollments', [ProfessorController::class, 'viewEnrollments'])->name('professor.subjects.viewEnrollments');
+    Route::delete('/professor/enrollments/{enrollment}/removeStudent', [ProfessorController::class, 'removeStudent'])->name('professor.subjects.removeStudent');
+
 });
