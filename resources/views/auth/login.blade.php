@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/registration.css') }}" > <!-- Ensure your CSS is properly linked -->
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/registration.css') }}">
 </head>
 <body>
     <div class="container">
@@ -14,19 +13,18 @@
             @csrf
 
             <div>
-                <label for="email">Email:</label>
+                <label for="email">Email*:</label>
                 <input id="email" type="email" name="email" required autofocus>
-                <div class="error" id="emailError">Email is required</div>
             </div>
 
             <div>
-                <label for="password">Password:</label>
+                <label for="password">Password*:</label>
                 <input id="password" type="password" name="password" required>
-                <div class="error" id="passwordError">Password is required</div>
             </div>
 
+            <p>Fields marked with an asterisk (*) are required.</p>
             <button type="submit">Login</button>
-            <!-- Error message from Laravel validation -->
+
             @if ($errors->has('email'))
                 <div class="error">
                     {{ $errors->first('email') }}
