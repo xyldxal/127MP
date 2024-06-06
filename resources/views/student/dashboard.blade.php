@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('/images/dashboard-background.jpg'); /* Adjust or ensure this path is correct */
+            background-image: url('/images/dashboard-background.jpg');
             background-size: cover;
             background-position: center;
             margin: 0;
@@ -30,13 +30,13 @@
         }
 
         nav a {
-            color: #006400; /* Dark green */
+            color: #006400;
             text-decoration: none;
             font-weight: bold;
         }
 
         nav a:hover {
-            color: #8B0000; /* Dark red */
+            color: #8B0000;
         }
 
         .container {
@@ -137,21 +137,27 @@
                     </li>
                 @endforeach
             </ul>
+        @elseif(isset($query))
+            <p>No subjects found for "{{ $query }}".</p>
         @endif
 
         <!-- Display enrolled subjects -->
         <h2>Enrolled Subjects</h2>
         <ul>
-            @foreach (Auth::user()->enrollments as $enrollment)
-                <li>
-                    {{ $enrollment->subject->name }}
-                    <form action="{{ route('student.remove-subject', $enrollment->subject_id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit">Remove</button>
-                    </form>
-                </li>
-            @endforeach
+            @if(Auth::user()->enrollments && Auth::user()->enrollments->count() > 0)
+                @foreach (Auth::user()->enrollments as $enrollment)
+                    <li>
+                        {{ $enrollment->subject->name }}
+                        <form action="{{ route('student.remove-subject', $enrollment->subject_id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Remove</button>
+                        </form>
+                    </li>
+                @endforeach
+            @else
+                <p>You are not enrolled in any subjects.</p>
+            @endif
         </ul>
 
         <!-- Finalize enrollment -->

@@ -6,13 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\Subject;
 use App\Models\Enrollment;
 use Auth;
+use Illuminate\Routing\Controller as BaseController;
 
-class StudentController extends Controller
+class StudentController extends BaseController
 {
     public function dashboard()
     {
-        $enrollments = Enrollment::where('student_id', Auth::id())->with('subject')->get();
-        return view('student.dashboard', compact('enrollments'));
+        // Load the enrollments with subjects
+        $user = Auth::user();
+        $user->load('enrollments.subject');
+
+        return view('student.dashboard', [
+            'enrollments' => $user->enrollments
+        ]);
     }
 
     public function search(Request $request)
