@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Subject;
 
 class ProfessorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function dashboard()
     {
-        //
+        $subjects = Subject::where('professor_id', auth()->id())->get();
+
+        return view('professors.dashboard', compact('subjects'));
     }
 
     /**

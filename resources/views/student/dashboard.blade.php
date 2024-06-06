@@ -1,4 +1,3 @@
-<!-- resources/views/student/dashboard.blade.php -->
 
 <!DOCTYPE html>
 <html lang="en">

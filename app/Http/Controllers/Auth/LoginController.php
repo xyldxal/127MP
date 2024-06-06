@@ -32,10 +32,19 @@ class LoginController extends Controller
             ]);
         }
 
-        if (Auth::attempt($credentials, $request->filled('remember'))) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/dashboard');
+            // Redirect based on user role
+            $user = Auth::user();
+            if ($user->role === 'student') {
+                return redirect()->route('student.dashboard');
+            } elseif ($user->role === 'professor') {
+                return redirect()->route('professor.dashboard');
+            }
+
+            // Default redirection if role is not recognized
+            return redirect()->intended('/login');
         }
 
         return back()->withErrors([
