@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UPM Registration</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/registration.css') }}" >
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 <body>
     <nav>
         <a href="/">Home</a>
