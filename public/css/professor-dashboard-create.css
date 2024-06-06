@@ -23,6 +23,27 @@ body {
     margin-top: 50px;
     box-sizing: border-box;
 }
+
+nav {
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    z-index: 1000; /* Ensures nav is above all other content */
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    background-color: #006400; /* Dark green background */
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin-left: 0.5rem;
+}
+
+nav a:hover {
+    background-color: #8B0000; /* Dark red background */
+}
+
 h1 {
     color: #333;
 }
@@ -52,7 +73,25 @@ button {
     margin-top: 20px;
     border: none;
     cursor: pointer;
+    font-size: 16px;
 }
 button:hover {
     background-color: #8B0000;
 }
+.back-button {
+    display: inline-block;
+    color: #fff;
+    background-color: #006400;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px; /* Add margin-top to space it from the table */
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.back-button:hover {
+    background-color: #8B0000;
+}
+

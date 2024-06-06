@@ -7,6 +7,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/professor-dashboard.css') }}" >
 </head>
 <body>
+    <nav>
+        <a href="/login">Logout</a>
+    </nav>
     <div class="container">
         <h1>Enrollments for {{ $subject->name }}</h1>
         @if($enrollments->isEmpty())
@@ -37,6 +40,8 @@
                 </tbody>
             </table>
         @endif
+        <a href="/professor/dashboard" class = "back-button">Back</a>
     </div>
+    
 </body>
 </html>

@@ -7,6 +7,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/professor-dashboard-create.css') }}" >
 </head>
 <body>
+    <nav>
+        <a href="/login">Logout</a>
+    </nav>
     <div class="container">
         <h1>Create New Subject</h1>
         <form action="{{ route('professor.subjects.store') }}" method="POST">
@@ -16,6 +19,7 @@
             <label for="slots">Available Slots</label>
             <input type="number" id="slots" name="slots" placeholder="Enter Slots Here" required>
             <button type="submit">Create Subject</button>
+            <a href="/professor/dashboard" class = "back-button">Back</a>
         </form>
     </div>
 </body>

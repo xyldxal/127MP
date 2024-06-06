@@ -7,6 +7,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/professor-dashboard.css') }}" >
 </head>
 <body>
+    <nav>
+        <a href="/login">Logout</a>
+    </nav>
     <div class="container">
         <h1>Professor Dashboard</h1>
         <a href="{{ route('professor.subjects.create') }}" class="button">Create New Subject</a>
