@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,6 +45,8 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
+            width: 80%;
+            max-width: 600px;
         }
 
         h1 {
@@ -55,6 +56,47 @@
         p {
             color: #555;
             font-size: 16px;
+        }
+
+        form {
+            margin: 20px 0;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #006400;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #8B0000;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li form {
+            display: inline;
         }
     </style>
 </head>
@@ -72,7 +114,51 @@
     <div class="container">
         <h1>Welcome, {{ Auth::user()->name }}</h1>
         <p>This is your dashboard.</p>
-        <!-- Additional dashboard content such as links to courses, results, etc. can be added here -->
+        
+        <!-- Search for subjects -->
+        <form action="{{ route('student.search') }}" method="POST">
+            @csrf
+            <input type="text" name="query" placeholder="Search for subjects">
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Display search results -->
+        @if(isset($subjects) && $subjects->count() > 0)
+            <h2>Search Results</h2>
+            <ul>
+                @foreach ($subjects as $subject)
+                    <li>
+                        {{ $subject->name }}
+                        <form action="{{ route('student.add-subject') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="subject_id" value="{{ $subject->id }}">
+                            <button type="submit">Add</button>
+                        </form>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+
+        <!-- Display enrolled subjects -->
+        <h2>Enrolled Subjects</h2>
+        <ul>
+            @foreach (Auth::user()->enrollments as $enrollment)
+                <li>
+                    {{ $enrollment->subject->name }}
+                    <form action="{{ route('student.remove-subject', $enrollment->subject_id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Remove</button>
+                    </form>
+                </li>
+            @endforeach
+        </ul>
+
+        <!-- Finalize enrollment -->
+        <form action="{{ route('student.finalize-enrollment') }}" method="POST">
+            @csrf
+            <button type="submit">Finalize Enrollment</button>
+        </form>
     </div>
 </body>
 </html>
