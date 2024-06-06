@@ -101,69 +101,95 @@
     </style>
 </head>
 <body>
-    <nav>
-        <a href="{{ route('student.dashboard') }}">Dashboard</a>
-        <a href="{{ route('logout') }}"
-           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            Logout
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-    </nav>
     <div class="container">
-        <h1>Welcome, {{ Auth::user()->name }}</h1>
-        <p>This is your dashboard.</p>
-        
-        <!-- Search for subjects -->
-        <form action="{{ route('student.search') }}" method="POST">
-            @csrf
+        <h1>Student Dashboard</h1>
+
+        <h2>Your Enrollments</h2>
+        @if($enrollments->isEmpty())
+            <p>You are not enrolled in any subjects.</p>
+        @else
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject Name</th>
+                        <th>Slots</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($enrollments as $enrollment)
+                        <tr>
+                            <td>{{ $enrollment->subject->name }}</td>
+                            <td>{{ $enrollment->subject->slots }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+
+        <h2>Your Enrollment Cart</h2>
+        @if($cart->isEmpty())
+            <p>Your enrollment cart is empty.</p>
+        @else
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($cart as $cartItem)
+                        <tr>
+                            <td>{{ $cartItem->subject->name }}</td>
+                            <td>
+                                <form action="{{ route('student.remove-subject', $cartItem->subject_id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="remove-button">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+
+        <h2>Search Subjects</h2>
+        <form action="{{ route('student.search') }}" method="GET">
             <input type="text" name="query" placeholder="Search for subjects">
             <button type="submit">Search</button>
         </form>
 
-        <!-- Display search results -->
-        @if(isset($subjects) && $subjects->count() > 0)
+        @isset($subjects)
             <h2>Search Results</h2>
-            <ul>
-                @foreach ($subjects as $subject)
-                    <li>
-                        {{ $subject->name }}
-                        <form action="{{ route('student.add-subject') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="subject_id" value="{{ $subject->id }}">
-                            <button type="submit">Add</button>
-                        </form>
-                    </li>
-                @endforeach
-            </ul>
-        @elseif(isset($query))
-            <p>No subjects found for "{{ $query }}".</p>
-        @endif
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject Name</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($subjects as $subject)
+                        <tr>
+                            <td>{{ $subject->name }}</td>
+                            <td>{{ $subject->description }}</td>
+                            <td>
+                                <form action="{{ route('student.add-subject') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="subject_id" value="{{ $subject->id }}">
+                                    <button type="submit" class="button">Add to Cart</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endisset
 
-        <!-- Display enrolled subjects -->
-        <h2>Enrolled Subjects</h2>
-        <ul>
-            @if(Auth::user()->enrollments && Auth::user()->enrollments->count() > 0)
-                @foreach (Auth::user()->enrollments as $enrollment)
-                    <li>
-                        {{ $enrollment->subject->name }}
-                        <form action="{{ route('student.remove-subject', $enrollment->subject_id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Remove</button>
-                        </form>
-                    </li>
-                @endforeach
-            @else
-                <p>You are not enrolled in any subjects.</p>
-            @endif
-        </ul>
-
-        <!-- Finalize enrollment -->
         <form action="{{ route('student.finalize-enrollment') }}" method="POST">
             @csrf
-            <button type="submit">Finalize Enrollment</button>
+            <button type="submit" class="button">Finalize Enrollment</button>
         </form>
     </div>
 </body>

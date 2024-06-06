@@ -51,6 +51,11 @@ class User extends Authenticatable
         return $this->hasMany(Enrollment::class, 'student_id');
     }
 
+    public function cart()
+    {
+        return $this->hasMany(Cart::class, 'student_id');
+    }
+
     public function subjects()
     {
         return $this->hasMany(Subject::class, 'professor_id');
