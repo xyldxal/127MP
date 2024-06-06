@@ -6,11 +6,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/images/dashboard-background.jpg'); /* Adjust or ensure this path is correct */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav a {
+            color: #006400; /* Dark green */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #8B0000; /* Dark red */
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #006400;
+        }
+
+        p {
+            color: #555;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
     <nav>
-        <!-- Navigation links -->
         <a href="{{ route('dashboard') }}">Dashboard</a>
         <a href="{{ route('logout') }}"
            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -23,8 +73,7 @@
     <div class="container">
         <h1>Welcome, {{ Auth::user()->name }}</h1>
         <p>This is your dashboard.</p>
-        <!-- Add more content relevant to the student dashboard -->
+        <!-- Additional dashboard content such as links to courses, results, etc. can be added here -->
     </div>
-    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
