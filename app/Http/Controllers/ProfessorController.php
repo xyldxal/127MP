@@ -17,51 +17,41 @@ class ProfessorController extends Controller
         return view('professors.dashboard', compact('subjects'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function createSubject()
     {
-        //
+        return view('professors.create_subject');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function storeSubject(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'slots' => 'required|integer',
+        ]);
+
+        $subject = new Subject();
+        $subject->name = $request->name;
+        $subject->slots = $request->slots;
+        $subject->professor_id = auth()->id();
+        $subject->save();
+
+        return redirect()->route('professor.dashboard')->with('success', 'Subject created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function viewEnrollments(Subject $subject)
     {
-        //
+        // Load enrollments for the selected subject
+        $enrollments = Enrollment::where('subject_id', $subject->id)->with('student')->get();
+
+        return view('professors.view_enrollments', compact('subject', 'enrollments'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function removeStudent(Enrollment $enrollment)
     {
-        //
+        // Delete enrollment record
+        $enrollment->delete();
+
+        return redirect()->back()->with('success', 'Student removed from subject.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
