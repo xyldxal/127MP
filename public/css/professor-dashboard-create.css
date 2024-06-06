@@ -1,0 +1,97 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    background-image: url('/images/dashboard-background.jpg');
+    background-size: cover;
+    background-position: center;
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: inset 0px 0px 100px rgb(0, 0, 0, 0.5);
+    height: 100vh;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.75);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    box-sizing: border-box;
+}
+
+nav {
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    z-index: 1000; /* Ensures nav is above all other content */
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    background-color: #006400; /* Dark green background */
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin-left: 0.5rem;
+}
+
+nav a:hover {
+    background-color: #8B0000; /* Dark red background */
+}
+
+h1 {
+    color: #333;
+}
+form {
+    margin-top: 20px;
+}
+label {
+    display: block;
+    margin-top: 10px;
+    color: #333;
+}
+input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #006400;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+button:hover {
+    background-color: #8B0000;
+}
+.back-button {
+    display: inline-block;
+    color: #fff;
+    background-color: #006400;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px; /* Add margin-top to space it from the table */
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.back-button:hover {
+    background-color: #8B0000;
+}
+

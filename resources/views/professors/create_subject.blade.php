@@ -4,65 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Subject</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 50px;
-        }
-        h1 {
-            color: #333;
-        }
-        form {
-            margin-top: 20px;
-        }
-        label {
-            display: block;
-            margin-top: 10px;
-            color: #333;
-        }
-        input[type="text"], input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        button {
-            display: inline-block;
-            padding: 10px 20px;
-            color: #fff;
-            background-color: #006400;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #8B0000;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/professor-dashboard-create.css') }}" >
 </head>
 <body>
+    <nav>
+        <a href="/login">Logout</a>
+    </nav>
     <div class="container">
         <h1>Create New Subject</h1>
         <form action="{{ route('professor.subjects.store') }}" method="POST">
             @csrf
             <label for="name">Subject Name</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" placeholder="Enter Subject Name Here" required>
             <label for="slots">Available Slots</label>
-            <input type="number" id="slots" name="slots" required>
+            <input type="number" id="slots" name="slots" placeholder="Enter Slots Here" required>
             <button type="submit">Create Subject</button>
+            <a href="/professor/dashboard" class = "back-button">Back</a>
         </form>
     </div>
 </body>

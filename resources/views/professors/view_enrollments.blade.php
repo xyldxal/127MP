@@ -4,58 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Enrollments</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 50px;
-        }
-        h1, h2 {
-            color: #333;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f5f5f5;
-        }
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            color: #fff;
-            background-color: #006400;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-        .button:hover {
-            background-color: #8B0000;
-        }
-        .remove-button {
-            background-color: #8B0000;
-        }
-        .remove-button:hover {
-            background-color: #FF0000;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/professor-dashboard.css') }}" >
 </head>
 <body>
+    <nav>
+        <a href="/login">Logout</a>
+    </nav>
     <div class="container">
         <h1>Enrollments for {{ $subject->name }}</h1>
         @if($enrollments->isEmpty())
@@ -86,6 +40,8 @@
                 </tbody>
             </table>
         @endif
+        <a href="/professor/dashboard" class = "back-button">Back</a>
     </div>
+    
 </body>
 </html>
