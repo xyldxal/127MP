@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\EnrollmentController;
-
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 
@@ -24,6 +24,6 @@ Route::middleware(['auth'])->group(function () {
     // Routes accessible only to authenticated users
     Route::resource('subjects', SubjectController::class);
     Route::resource('enrollments', EnrollmentController::class);
-
+    Route::get('/dashboard', [StudentController::class, 'index'])->middleware('auth')->name('dashboard');
     Route::get('subjects/enrollments', [SubjectController::class, 'viewEnrollments'])->name('subjects.enrollments');
 });
