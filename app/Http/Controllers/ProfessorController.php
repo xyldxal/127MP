@@ -36,15 +36,17 @@ class ProfessorController extends Controller
         return redirect()->route('professor.dashboard')->with('success', 'Subject created successfully.');
     }
 
-    public function viewEnrollments($subjectId)
+    public function viewEnrollments(Subject $subject)
     {
-        $subject = Subject::with('enrollments.student')->findOrFail($subjectId);
-        return view('professors.view_enrollments', compact('subject'));
+        // Load enrollments for the selected subject
+        $enrollments = Enrollment::where('subject_id', $subject->id)->with('student')->get();
+
+        return view('professors.view_enrollments', compact('subject', 'enrollments'));
     }
 
-    public function removeStudent(Request $request, $enrollmentId)
+    public function removeStudent(Enrollment $enrollment)
     {
-        $enrollment = Enrollment::findOrFail($enrollmentId);
+        // Delete enrollment record
         $enrollment->delete();
 
         return redirect()->back()->with('success', 'Student removed from subject.');
