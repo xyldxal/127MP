@@ -3,9 +3,6 @@ body {
     background-image: url('/images/dashboard-background.jpg');
     background-size: cover;
     background-position: center;
-    max-width: 100%;
-    max-height: 100%;
-    box-shadow: inset 0px 0px 100px rgb(0, 0, 0, 0.5);
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -18,25 +15,24 @@ nav {
     position: fixed;
     right: 1rem;
     top: 1rem;
-    z-index: 1000; /* Ensures nav is above all other content */
+    z-index: 1000;
 }
 
 nav a {
     text-decoration: none;
     color: white;
-    background-color: #006400; /* Dark green background */
+    background-color: #006400;
     padding: 0.5rem 1rem;
     border-radius: 4px;
     margin-left: 0.5rem;
 }
 
 nav a:hover {
-    background-color: #8B0000; /* Dark red background */
-    color: white;
+    background-color: #8B0000;
 }
 
 .container {
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -45,11 +41,11 @@ nav a:hover {
     max-width: 600px;
 }
 
-h1 {
+h1, h2 {
     color: #006400;
 }
 
-p {
+p, td, th {
     color: #555;
     font-size: 16px;
 }
@@ -58,7 +54,7 @@ form {
     margin: 20px 0;
 }
 
-input[type="text"] {
+input[type="text"], button {
     width: 90%;
     padding: 10px;
     margin: 10px 0;
@@ -73,24 +69,48 @@ button {
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
+    width: auto;  /* Adjust this to fit content */
 }
 
 button:hover {
     background-color: #8B0000;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+.table-right {
+    text-align: right;
 }
 
-li {
-    margin: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-li form {
-    display: inline;
+th, td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+table {
+    width: 100%; /* Ensures table uses full container width */
+    border-collapse: collapse; /* Removes space between borders */
+    table-layout: fixed; /* Helps in defining exact column widths */
+}
+
+th, td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+th:first-child, td:first-child {
+    width: 50%; /* Assigns 50% width to the first column */
+    text-align: left; /* Ensures text aligns to the left */
+}
+
+th:last-child, td:last-child {
+    width: 30%; /* Adjusts the width of the last column for action buttons */
+    text-align: right;
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 20%; /* Adjusts the width for the middle column */
+    text-align: center;
 }
