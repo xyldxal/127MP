@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UPM Registration</title>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/registration.css') }}" >
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/registration.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 </head>
 <body>
@@ -13,7 +13,7 @@
     </nav>
     <div class="container">
         <h1>UPM Registration</h1>
-        <form method="POST" action="{{ route('register') }}">
+        <form id="registrationForm" method="POST" action="{{ route('register') }}">
             @csrf
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" placeholder="Your Name Here" required>
@@ -21,7 +21,7 @@
             <input id="email" type="email" name="email" placeholder="Your Email Here" value="{{ old('email') }}" required>
 
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"required>
+            <input type="password" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
             <div class="checkbox-container">
                 <input type="checkbox" id="show-password">
                 <label for="show-password">Show Password</label>
@@ -59,6 +59,15 @@
                 passwordConfirm.type = "text";
             } else {
                 passwordConfirm.type = "password";
+            }
+        };
+
+        document.getElementById('registrationForm').onsubmit = function(event) {
+            var password = document.getElementById('password').value;
+            var passwordConfirm = document.getElementById('password_confirmation').value;
+            if (password !== passwordConfirm) {
+                alert('Passwords do not match!');
+                event.preventDefault(); // Prevent form from submitting
             }
         };
     </script>
