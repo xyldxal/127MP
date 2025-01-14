@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('role', ['student', 'professor']);
+            $table->enum('role', ['student', 'professor']);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -58,5 +58,6 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('subjects');
         Schema::dropIfExists('enrollments');
+        Schema::dropIfExists('sessions');
     }
 };
